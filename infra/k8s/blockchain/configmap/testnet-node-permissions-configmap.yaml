@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: testnet-node-permissions-configmap
+  labels:
+    app: testnet-node-permissions-configmap
+  namespace: testnet
+data:
+  nodes-allowlist.yml: |-
+    nodes-allowlist=[
+      "enode://9881c9b0380e8d3360ae2ff9bb7833d864fc4670b5fd87d1919c2a3ce72ed7d3493d7d9e5c276def52bcce8f5a43a1a8fb0969b5f054c33215bad3060d690f5b@validator1-0.testnet-validator1.testnet.svc.cluster.local:30303",
+      "enode://b3b925487eb0b446c2715c37e91cec8cd4d7c089129d646b7faf602d3eee35a7106b7ef548ba18793b49505e031d6d849e7c3c27f96560271dda6a6844b37ee2@validator2-0.testnet-validator2.testnet.svc.cluster.local:30303",
+      "enode://e56b0f4a68f765693d20aaa4cbe821c7c9a3020554720b895afa53a29f7139f30e21c44d2beece054820a0acbdaaf308a6995194992c6d3d692f22ec9da64128@validator3-0.testnet-validator3.testnet.svc.cluster.local:30303",
+      "enode://8947a48a8e3bd656b2170e72456b606055f01cbacf089d05aea88cf3b8224602ec67105c7329e4d64771133de24b66eff6b9b75ac3c760d012831bf84db11c11@validator4-0.testnet-validator4.testnet.svc.cluster.local:30303",
+    ]

@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: testnet-rpcnode-configmap
+  labels:
+    app: testnet-rpcnode-configmap
+  namespace: testnet
+data:
+  BESU_DATA_PATH: "/data"
+  BESU_GENESIS_FILE: "/etc/genesis/genesis.json"
+
+  BESU_LOGGING: "INFO"
+
+  BESU_MIN_GAS_PRICE: "0"
+
+  BESU_TX_POOL_RETENTION_HOURS: "24"
+  BESU_TX_POOL_MAX_SIZE: "1024"
+
+  BESU_P2P_ENABLED: "true"
+  BESU_DISCOVERY_ENABLED: "true"
+  BESU_P2P_PORT: "30303"
+  BESU_MAX_PEERS: "25"
+
+  BESU_HOST_ALLOWLIST: "*"
+
+  BESU_RPC_HTTP_ENABLED: "true"
+  BESU_RPC_HTTP_HOST: "0.0.0.0"
+  BESU_RPC_HTTP_PORT: "8545"
+  BESU_RPC_HTTP_API: "eth, we3, net, trace"
+  BESU_RPC_HTTP_CORS_ORIGINS: "all"
+  BESU_RPC_HTTP_AUTHENTICATION_ENABLED: "false"
+
+  BESU_RPC_WS_ENABLED: "true"
+  BESU_RPC_WS_HOST: "0.0.0.0"
+  BESU_RPC_WS_PORT: "8546"
+  BESU_RPC_WS_API: "eth, we3, net, trace"
+  BESU_RPC_WS_CORS_ORIGINS: "all"
+  BESU_RPC_WS_AUTHENTICATION_ENABLED: "false"
+
+  BESU_GRAPHQL_HTTP_ENABLED: "true"
+  BESU_GRAPHQL_HTTP_HOST: "0.0.0.0"
+  BESU_GRAPHQL_HTTP_PORT: "8547"
+  BESU_GRAPHQL_HTTP_CORS_ORIGINS: "all"
+
+  BESU_METRICS_ENABLED: "true"
+  BESU_METRICS_HOST: "0.0.0.0"
+  BESU_METRICS_PORT: "9545"
+
+  BESU_PERMISSIONS_NODES_CONFIG_FILE_ENABLED: "true"
+  BESU_PERMISSIONS_NODES_CONFIG_FILE: "/etc/permissions/nodes-allowlist.yml"
+  
