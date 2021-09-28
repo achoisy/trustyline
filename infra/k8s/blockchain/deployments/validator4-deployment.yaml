@@ -63,7 +63,7 @@ spec:
           command:
             - "sh"
             - "-c"
-            - "curl -X GET --connect-timeout 30 --max-time 10 --retry 6 --retry-delay 0 --retry-max-time 300 ${TESTNET_VALIDATOR1_SERVICE_HOST}:8545/liveness"
+            - "curl -X GET --connect-timeout 60 --max-time 300 --retry 10 --retry-delay 30 --retry-max-time 300 ${TESTNET_VALIDATOR1_SERVICE_HOST}:8545/liveness"
       containers:
         - name: validator4
           image: hyperledger/besu:latest
@@ -101,6 +101,9 @@ spec:
             - name: genesis-config
               mountPath: /etc/genesis
               readOnly: true
+            - name: config-toml
+              mountPath: /etc/besu
+              readOnly: true              
             - name: node-permissions
               mountPath: /etc/permissions
             - name: data
@@ -128,11 +131,9 @@ spec:
             - |
               exec /opt/besu/bin/besu \
                 --node-private-key-file=/secrets/nodekey \
+                --config-file=/etc/besu/config.toml \
                 --Xdns-enabled=true --Xdns-update-enabled=true --Xnat-kube-service-name=testnet-validator4 \
                 --bootnodes=enode://${VALIDATOR1_PUBKEY}@validator1-0.testnet-validator1.testnet.svc.cluster.local:30303,enode://${VALIDATOR2_PUBKEY}@validator2-0.besu-validator2.besu.svc.cluster.local:30303
-          envFrom:
-          - configMapRef:
-              name: testnet-validator-configmap        
       volumes:
         - name: key
           secret:
@@ -140,6 +141,9 @@ spec:
         - name: genesis-config
           configMap:
             name: testnet-genesis-configmap
+        - name: config-toml
+          configMap:
+            name: testnet-validator-configmap             
         - name: node-permissions
           configMap:
             name: testnet-node-permissions-configmap

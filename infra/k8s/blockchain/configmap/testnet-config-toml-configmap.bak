@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: testnet-rpcnode-configmap
+  name: testnet-config-toml-configmap
   labels:
-    app: testnet-rpcnode-configmap
+    app: testnet-config-toml-configmap
   namespace: testnet
 data:
   config.toml: |-

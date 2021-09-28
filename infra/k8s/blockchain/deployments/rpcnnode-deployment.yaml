@@ -29,7 +29,7 @@ subjects:
   namespace: testnet
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: rpcnode
   labels:
@@ -37,10 +37,10 @@ metadata:
   namespace: testnet
 spec:
   replicas: 1
-  strategy: {}
   selector:
     matchLabels:
       app: rpcnode
+  serviceName: testnet-rcpnode
   template:
     metadata:
       labels:
@@ -57,7 +57,7 @@ spec:
           command:
             - "sh"
             - "-c"
-            - "curl -X GET --connect-timeout 30 --max-time 10 --retry 6 --retry-delay 0 --retry-max-time 300 ${TESTNET_VALIDATOR1_SERVICE_HOST}:8545/liveness"
+            - "curl -X GET --connect-timeout 60 --max-time 300 --retry 10 --retry-delay 30 --retry-max-time 300 ${TESTNET_VALIDATOR1_SERVICE_HOST}:8545/liveness"
       containers:
         - name: rpcnode
           image: "hyperledger/besu:latest"
@@ -92,6 +92,9 @@ spec:
             - name: genesis-config
               mountPath: /etc/genesis
               readOnly: true
+            - name: config-toml
+              mountPath: /etc/besu
+              readOnly: true             
             - name: node-permissions
               mountPath: /etc/permissions
             - name: data
@@ -118,17 +121,17 @@ spec:
           args:
             - |
               exec /opt/besu/bin/besu \
-                --node-private-key-file=/secrets/nodekey \
+                --config-file=/etc/besu/config.toml \
                 --Xdns-enabled=true --Xdns-update-enabled=true --Xnat-kube-service-name=rpc-node \
                 --bootnodes=enode://${VALIDATOR1_PUBKEY}@validator1-0.testnet-validator1.testnet.svc.cluster.local:30303,enode://${VALIDATOR2_PUBKEY}@validator2-0.besu-validator2.besu.svc.cluster.local:30303
-          envFrom:
-          - configMapRef:
-              name: testnet-rpcnode-configmap
       restartPolicy: Always
       volumes:
         - name: genesis-config
           configMap:
             name: testnet-genesis-configmap
+        - name: config-toml
+          configMap:
+            name: testnet-rpcnode-configmap             
         - name: node-permissions
           configMap:
             name: testnet-node-permissions-configmap

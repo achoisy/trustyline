@@ -58,7 +58,7 @@ spec:
       containers:
         - name: validator1
           image: hyperledger/besu:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           resources:
             requests:
               cpu: 100m
@@ -87,6 +87,9 @@ spec:
             - name: genesis-config
               mountPath: /etc/genesis
               readOnly: true
+            - name: config-toml
+              mountPath: /etc/besu
+              readOnly: true
             - name: node-permissions
               mountPath: /etc/permissions
             - name: data
@@ -114,11 +117,9 @@ spec:
             - |
               exec /opt/besu/bin/besu \
                 --node-private-key-file=/secrets/nodekey \
+                --config-file=/etc/besu/config.toml \
                 --Xdns-enabled=true --Xdns-update-enabled=true --Xnat-kube-service-name=testnet-validator1 \
                 --bootnodes=enode://${VALIDATOR1_PUBKEY}@validator1-0.testnet-validator1.testnet.svc.cluster.local:30303
-          envFrom:
-          - configMapRef:
-              name: testnet-validator-configmap
       volumes:
         - name: key
           secret:
@@ -126,6 +127,9 @@ spec:
         - name: genesis-config
           configMap:
             name: testnet-genesis-configmap
+        - name: config-toml
+          configMap:
+            name: testnet-validator-configmap            
         - name: node-permissions
           configMap:
             name: testnet-node-permissions-configmap

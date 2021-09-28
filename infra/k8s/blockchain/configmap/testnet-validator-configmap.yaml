@@ -6,46 +6,55 @@ metadata:
     app: testnet-validator-configmap
   namespace: testnet
 data:
-  BESU_DATA_PATH: "/data"
-  BESU_GENESIS_FILE: "/etc/genesis/genesis.json"
-
-  BESU_LOGGING: "INFO"
-
-  BESU_MIN_GAS_PRICE: "0"
-
-  BESU_TX_POOL_RETENTION_HOURS: "24"
-  BESU_TX_POOL_MAX_SIZE: "1024"
-
-  BESU_P2P_ENABLED: "true"
-  BESU_DISCOVERY_ENABLED: "true"
-  BESU_P2P_PORT: "30303"
-  BESU_MAX_PEERS: "25"
-
-  BESU_HOST_ALLOWLIST: "*"
-
-  BESU_RPC_HTTP_ENABLED: "true"
-  BESU_RPC_HTTP_HOST: "0.0.0.0"
-  BESU_RPC_HTTP_PORT: "8545"
-  BESU_RPC_HTTP_API: "eth, we3, net, trace, debug, miner, ibft, admin, trace, perm, txpool"
-  BESU_RPC_HTTP_CORS_ORIGINS: "all"
-  BESU_RPC_HTTP_AUTHENTICATION_ENABLED: "false"
-
-  BESU_RPC_WS_ENABLED: "true"
-  BESU_RPC_WS_HOST: "0.0.0.0"
-  BESU_RPC_WS_PORT: "8546"
-  BESU_RPC_WS_API: "eth, we3, net, trace, debug, miner, ibft, admin, trace, perm, txpool"
-  BESU_RPC_WS_CORS_ORIGINS: "all"
-  BESU_RPC_WS_AUTHENTICATION_ENABLED: "false"
-
-  BESU_GRAPHQL_HTTP_ENABLED: "true"
-  BESU_GRAPHQL_HTTP_HOST: "0.0.0.0"
-  BESU_GRAPHQL_HTTP_PORT: "8547"
-  BESU_GRAPHQL_HTTP_CORS_ORIGINS: "all"
-
-  BESU_METRICS_ENABLED: "true"
-  BESU_METRICS_HOST: "0.0.0.0"
-  BESU_METRICS_PORT: "9545"
-
-  BESU_PERMISSIONS_NODES_CONFIG_FILE_ENABLED: "true"
-  BESU_PERMISSIONS_NODES_CONFIG_FILE: "/etc/permissions/nodes-allowlist.yml"
+  config.toml: |-
+    # Every possible CLI should be in this file.
+    #
+    # Please use a plausible value, besu has to at least be able to parse it.
+    # If it is a multi-valued CLI make it a TOML array.
+    # If it is a number or boolean make it a number or boolean
+    # All other config options are strings, and must be quoted.
+    # Node Information
+    data-path="/data"
+    genesis-file="/etc/genesis/genesis.json"
+    # TODO : insert as command line & mount Volume
+    # rpc-http-authentication-credentials-file="none"
+    # TODO : insert as command line & mount Volume
+    # rpc-ws-authentication-credentials-file="none"
+    logging="INFO"
+    min-gas-price=0
+    # Transaction Pool
+    tx-pool-retention-hours=999
+    tx-pool-max-size=1024
+    # P2P network
+    p2p-enabled=true
+    discovery-enabled=true
+    #p2p-host="0.0.0.0"
+    p2p-port=30303
+    max-peers=25
+    host-allowlist=["*"]
+    # JSON-RPC
+    rpc-http-enabled=true
+    rpc-http-host="0.0.0.0"
+    rpc-http-port=8545
+    rpc-http-api=["DEBUG","ETH", "ADMIN", "WEB3", "IBFT", "NET", "TRACE", "PERM", "MINER"]
+    rpc-http-cors-origins=["*"]
+    rpc-http-authentication-enabled=false
+    # GRAPHQL-RPC
+    graphql-http-enabled=false
+    graphql-http-host="0.0.0.0"
+    graphql-http-port=8547
+    graphql-http-cors-origins=["*"]
+    # WebSockets API
+    rpc-ws-enabled=false
+    rpc-ws-host="0.0.0.0"
+    rpc-ws-port=8546
+    rpc-ws-api=["DEBUG","ETH", "ADMIN", "WEB3", "IBFT", "NET", "TRACE", "PERM", "MINER"]
+    rpc-ws-authentication-enabled=false
+    # Metrics
+    metrics-enabled=true
+    metrics-host="0.0.0.0"
+    metrics-port=9545
+    # Permissioning
+    permissions-nodes-config-file-enabled=false
+    permissions-nodes-config-file="/etc/permissions/nodes-allowlist.yml"
   
