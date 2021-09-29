@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cakeshop-configmap
+  labels:
+    app: cakeshop-configmap
+  namespace: testnet
+data:
+  nodes.json: |-
+    [
+      {
+        "name": "validator1",
+        "rpcUrl": "http://validator1-0.testnet-validator1.testnet.svc.cluster.local:8545",
+        "transactionManagerUrl": ""
+      },
+      {
+        "name": "validator2",
+        "rpcUrl": "http://validator2-0.testnet-validator2.testnet.svc.cluster.local:8545",
+        "transactionManagerUrl": ""
+      },
+      {
+        "name": "validator3",
+        "rpcUrl": "http://validator3-0.testnet-validator3.testnet.svc.cluster.local:8545",
+        "transactionManagerUrl": ""
+      },
+      {
+        "name": "validator4",
+        "rpcUrl": "http://validator4-0.testnet-validator4.testnet.svc.cluster.local:8545",
+        "transactionManagerUrl": ""
+      },
+      {
+        "name": "rpcnode",
+        "rpcUrl": "http://rpcnode-0.testnet-rpcnode.testnet.svc.cluster.local:8545",
+        "transactionManagerUrl": ""
+      }
+    ]

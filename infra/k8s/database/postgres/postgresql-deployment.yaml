@@ -1,0 +1,46 @@
+# PostgreSQL StatefulSet
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgresql-db
+  namespace: testnet
+spec:
+  serviceName: postgresql-db-service
+  selector:
+    matchLabels:
+      app: postgresql-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgresql-db
+    spec:
+      containers:
+        - name: postgresql-db
+          image: postgres:latest
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          envFrom:
+          - configMapRef:
+              name: postgres-db-config
+      # Volume Claim
+      volumes:
+        - name: data
+          emptyDir:
+            sizeLimit: "1Gi"
+---
+# PostgreSQL StatefulSet Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgresql-db-service
+  namespace: testnet
+spec:
+  selector:
+    app: postgresql-db
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+      name: postgresql

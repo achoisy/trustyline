@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lite-explorer
+  labels:
+    app: lite-explorer
+  namespace: testnet
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lite-explorer
+  template:
+    metadata:
+      # Optional, if this'd be wrapped in a helm chart it can be generated as the SHA256 of the configmap
+      # to pod rolling updates reloads on configmap change
+      annotations:
+        checksum/config: 6733181240aa3db87503350771fb19fcaef0707e209928165a9cc7e3e3050781
+      labels:
+        app: lite-explorer
+    spec:
+      initContainers:
+        - name: init-validator
+          image: busybox:1.28
+          command: ['sh', '-c', "until nslookup validator4-0.testnet-validator4.testnet.svc.cluster.local; do echo waiting for validator4 to bootup; sleep 5; done"]
+        - name: init-bootnode
+          image: pegasyseng/k8s-helper:v1.18.4
+          command:
+            - "sh"
+            - "-c"
+            - "curl -X GET --connect-timeout 60 --max-time 300 --retry 10 --retry-delay 30 --retry-max-time 300 ${TESTNET_VALIDATOR1_SERVICE_HOST}:8545/liveness"    
+      containers:
+        - image: alethio/ethereum-lite-explorer
+          imagePullPolicy: IfNotPresent
+          name: app
+          ports:
+            - containerPort: 80
+              name: http
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html/config.json
+              name: config
+              subPath: config.json
+      volumes:
+        - name: config
+          configMap:
+            name: lite-explorer
+          
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lite-explorer
+  namespace: testnet
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: lite-explorer

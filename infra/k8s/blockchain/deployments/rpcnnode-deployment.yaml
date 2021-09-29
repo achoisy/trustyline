@@ -52,6 +52,9 @@ spec:
     spec:
       serviceAccountName: rpcnode-sa
       initContainers:
+        - name: init-validator
+          image: busybox:1.28
+          command: ['sh', '-c', "until nslookup validator4-0.testnet-validator4.testnet.svc.cluster.local; do echo waiting for validator4 to bootup; sleep 5; done"]        
         - name: init-bootnode
           image: pegasyseng/k8s-helper:v1.18.4
           command:

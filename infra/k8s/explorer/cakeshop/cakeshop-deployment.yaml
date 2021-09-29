@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cakeshop
+  labels:
+    app: cakeshop
+  namespace: testnet
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cakeshop
+  template:
+    metadata:
+      labels:
+        app: cakeshop
+    spec:
+      initContainers:
+        - name: init-bootnode
+          image: busybox:1.28
+          command: ['sh', '-c', "until nslookup validator4-0.testnet-validator4.testnet.svc.cluster.local; do echo waiting for validator4 to bootup; sleep 5; done"]
+      containers:
+        - image: achoisy/cakeshop
+          imagePullPolicy: IfNotPresent
+          name: cakeshop
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /opt/cakeshop/data/nodes.json
+              name: nodes
+              subPath: nodes.json
+      volumes:
+        - name: nodes
+          configMap:
+            name: cakeshop-configmap
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cakeshop
+  labels:
+    app: cakeshop
+  namespace: testnet
+spec:
+  type: ClusterIP
+  selector:
+    app: cakeshop
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: http

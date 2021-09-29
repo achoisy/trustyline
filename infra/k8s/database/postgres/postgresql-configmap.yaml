@@ -1,0 +1,13 @@
+# PostgreSQL StatefulSet ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-db-config
+  labels:
+    app: postgresql-db
+  namespace: testnet
+data:
+  POSTGRES_DB: blockscout
+  POSTGRES_USER: admin
+  POSTGRES_PASSWORD: password
+  PGDATA: /data/pgdata

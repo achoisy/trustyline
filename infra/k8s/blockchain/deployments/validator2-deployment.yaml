@@ -57,6 +57,9 @@ spec:
     spec:
       serviceAccountName: validator2-sa
       initContainers:
+        - name: init-validator
+          image: busybox:1.28
+          command: ['sh', '-c', "until nslookup validator1-0.testnet-validator1.testnet.svc.cluster.local; do echo waiting for validator1 to bootup; sleep 5; done"]       
         - name: init-bootnode
           image: pegasyseng/k8s-helper:v1.18.4
           command:
