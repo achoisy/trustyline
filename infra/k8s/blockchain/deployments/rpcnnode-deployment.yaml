@@ -11,6 +11,10 @@ metadata:
   namespace: testnet
 rules:
 - apiGroups: [""]
+  resources: ["secrets"]
+  resourceNames: [ testnet-rpcnode-key ]
+  verbs: ["get"]
+- apiGroups: [""]
   resources: ["services"]
   verbs: ["get", "list"]
 ---
@@ -40,7 +44,7 @@ spec:
   selector:
     matchLabels:
       app: rpcnode
-  serviceName: testnet-rcpnode
+  serviceName: testnet-rpcnode
   template:
     metadata:
       labels:
@@ -92,6 +96,9 @@ spec:
                     name: testnet-validators-pubkey
                     key: validator2PubKey
           volumeMounts:
+            - name: key
+              mountPath: /secrets
+              readOnly: true          
             - name: genesis-config
               mountPath: /etc/genesis
               readOnly: true
@@ -124,11 +131,15 @@ spec:
           args:
             - |
               exec /opt/besu/bin/besu \
+                --node-private-key-file=/secrets/nodekey \
                 --config-file=/etc/besu/config.toml \
-                --Xdns-enabled=true --Xdns-update-enabled=true --Xnat-kube-service-name=rpc-node \
-                --bootnodes=enode://${VALIDATOR1_PUBKEY}@validator1-0.testnet-validator1.testnet.svc.cluster.local:30303,enode://${VALIDATOR2_PUBKEY}@validator2-0.besu-validator2.besu.svc.cluster.local:30303
+                --Xdns-enabled=true --Xdns-update-enabled=true --Xnat-kube-service-name=testnet-rpcnode \
+                --bootnodes=enode://${VALIDATOR1_PUBKEY}@validator1-0.testnet-validator1.testnet.svc.cluster.local:30303,enode://${VALIDATOR2_PUBKEY}@validator2-0.testnet-validator2.testnet.svc.cluster.local:30303
       restartPolicy: Always
       volumes:
+        - name: key
+          secret:
+            secretName: testnet-rpcnode-key      
         - name: genesis-config
           configMap:
             name: testnet-genesis-configmap

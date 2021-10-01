@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: permissioning-smart-contract
+  labels:
+    app: permissioning-smart-contract
+  namespace: testnet
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: permissioning-smart-contract
+  template:
+    metadata:
+      labels:
+        app: permissioning-smart-contract
+    spec:
+      containers:
+        - name: permissioning-smart-contract
+          image: achoisy/perm-smart-contracts
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+              name: http
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: permissioning-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: permissioning-smart-contract
+  namespace: testnet
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: permissioning-smart-contract

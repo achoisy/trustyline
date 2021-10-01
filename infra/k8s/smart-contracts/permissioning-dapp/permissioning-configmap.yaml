@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: permissioning-config
+  labels:
+    app: permissioning-config
+  namespace: testnet
+data:
+  ACCOUNT_INGRESS_CONTRACT_ADDRESS: "0x0000000000000000000000000000000000008888"
+  CHAIN_ID: "1337"
+  BESU_NODE_PERM_ACCOUNT: "40e6394db44e5c1361a9c5c79de5d88f3d65645f"
+  BESU_NODE_PERM_KEY: "21b1f879724276e80a1e6a6731121f51ab7423f9c503aef0df6abc7737445d9b"
+  BESU_NODE_PERM_ENDPOINT: "http://validator1-0.testnet-validator1.testnet.svc.cluster.local:8545"

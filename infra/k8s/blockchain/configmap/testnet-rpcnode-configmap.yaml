@@ -36,7 +36,7 @@ data:
     rpc-http-enabled=true
     rpc-http-host="0.0.0.0"
     rpc-http-port=8545
-    rpc-http-api=["ETH", "WEB3", "NET", "TRACE"]
+    rpc-http-api=["ETH", "WEB3", "NET"]
     rpc-http-cors-origins=["*"]
     rpc-http-authentication-enabled=false
     # GRAPHQL-RPC
@@ -48,13 +48,15 @@ data:
     rpc-ws-enabled=true
     rpc-ws-host="0.0.0.0"
     rpc-ws-port=8546
-    rpc-ws-api=["ETH", "WEB3", "NET", "TRACE"]
+    rpc-ws-api=["ETH", "WEB3", "NET"]
     rpc-ws-authentication-enabled=false
     # Metrics
     metrics-enabled=true
     metrics-host="0.0.0.0"
     metrics-port=9545
     # Permissioning
-    permissions-nodes-config-file-enabled=false
+    permissions-nodes-config-file-enabled=true
     permissions-nodes-config-file="/etc/permissions/nodes-allowlist.yml"
-  
+    permissions-nodes-contract-version=2
+    permissions-accounts-contract-enabled=true    
+    permissions-accounts-contract-address="0x0000000000000000000000000000000000008888"

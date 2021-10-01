@@ -135,7 +135,7 @@ spec:
                 --node-private-key-file=/secrets/nodekey \
                 --config-file=/etc/besu/config.toml \
                 --Xdns-enabled=true --Xdns-update-enabled=true --Xnat-kube-service-name=testnet-validator2 \
-                --bootnodes=enode://${VALIDATOR1_PUBKEY}@validator1-0.testnet-validator1.testnet.svc.cluster.local:30303,enode://${VALIDATOR2_PUBKEY}@validator2-0.besu-validator2.besu.svc.cluster.local:30303 
+                --bootnodes=enode://${VALIDATOR1_PUBKEY}@validator1-0.testnet-validator1.testnet.svc.cluster.local:30303,enode://${VALIDATOR2_PUBKEY}@validator2-0.testnet-validator2.testnet.svc.cluster.local:30303 
       volumes:
         - name: key
           secret:
