@@ -6,7 +6,6 @@ metadata:
     app: rpcnode
   namespace: testnet
 spec:
-  type: LoadBalancer
   selector:
     app: rpcnode
   ports:

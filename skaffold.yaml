@@ -11,3 +11,4 @@ deploy:
       - ./infra/k8s-dev/*
       - ./infra/k8s/explorer/block-explorer-lite/*
       - ./infra/k8s/explorer/cakeshop/*
+      - ./infra/k8s/smart-contracts/permissioning-dapp/*
