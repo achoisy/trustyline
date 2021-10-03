@@ -8,7 +8,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-  - host: cakeshop.testnet.dev
+  - host: cakeshop.localhost
     http:
       paths:
       - path: /

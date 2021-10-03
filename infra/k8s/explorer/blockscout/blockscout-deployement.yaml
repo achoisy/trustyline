@@ -16,20 +16,77 @@ spec:
         app: blockscout
     spec:
       initContainers:
-        - name: init-blockscout
+        - name: init-validator
           image: busybox:1.28
-          command: ['sh', '-c', "until nslookup postgresql-db-0.postgresql-db-service.testnet.svc.cluster.local; do echo waiting for PostgresDB to bootup; sleep 5; done"]
+          command: ['sh', '-c', "until nslookup postgresql-db-0.postgresql-db-service.testnet.svc.cluster.local; do echo waiting for PostgreSQL to bootup; sleep 5; done"] 
       containers:
         - name: blockscout
           image: achoisy/blockscout:latest
           imagePullPolicy: IfNotPresent
+          env:
+              - name: VALIDATOR1_PUBKEY
+                valueFrom:
+                  configMapKeyRef:
+                    name: testnet-validators-pubkey
+                    key: validator1PubKey
+              - name: VALIDATOR2_PUBKEY
+                valueFrom:
+                  configMapKeyRef:
+                    name: testnet-validators-pubkey
+                    key: validator2PubKey
+          volumeMounts:
+            - name: genesis-config
+              mountPath: /etc/genesis
+              readOnly: true
+            - name: data
+              mountPath: /data
           ports:
             - containerPort: 4000
-              name: webserver
+              name: http
               protocol: TCP
+            - containerPort: 8545
+              name: json-rpc
+              protocol: TCP
+            - containerPort: 8546
+              name: ws
+              protocol: TCP
+            - containerPort: 8547
+              name: graphql
+              protocol: TCP
+            - containerPort: 30303
+              name: rlpx
+              protocol: TCP
+            - containerPort: 30303
+              name: discovery
+              protocol: UDP
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - |
+              exec /opt/app/besu/bin/besu \
+                --data-path=data \
+                --rpc-http-enabled \
+                --rpc-http-api=ETH,NET,WEB3,MINER,IBFT,ADMIN,TRACE,TXPOOL \
+                --rpc-ws-enabled \
+                --rpc-ws-api=ETH,NET,WEB3,MINER,IBFT,ADMIN,TRACE,TXPOOL \
+                --host-allowlist="*" \
+                --rpc-http-cors-origins="all" \
+                --genesis-file=/etc/genesis/genesis.json \
+                --Xdns-enabled=true --Xdns-update-enabled=true \
+                --bootnodes=enode://${VALIDATOR1_PUBKEY}@validator1-0.testnet-validator1.testnet.svc.cluster.local:30303,enode://${VALIDATOR2_PUBKEY}@validator2-0.testnet-validator2.testnet.svc.cluster.local:30303
           envFrom:
             - configMapRef:
                 name: blockscout-config
+      # Volume Claim
+      volumes:
+        - name: data
+          emptyDir:
+            sizeLimit: "1Gi"
+        - name: genesis-config
+          configMap:
+            name: testnet-genesis-configmap
+      restartPolicy: Always
 ---
 apiVersion: v1
 kind: Service
@@ -37,10 +94,10 @@ metadata:
   name: blockscout
   namespace: testnet
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - port: 4000
-      targetPort: http
+      targetPort: 4000
       protocol: TCP
       name: http
   selector:

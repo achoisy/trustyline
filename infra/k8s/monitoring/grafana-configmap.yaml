@@ -68,7 +68,7 @@ metadata:
     app: testnet-grafana-configmap-dashboards-testnet
   namespace: monitoring
 data:
-  besu.json: |-
+  testnet.json: |-
     {
       "__inputs": [
       {
