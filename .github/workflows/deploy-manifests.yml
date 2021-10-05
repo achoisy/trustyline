@@ -17,4 +17,14 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: apply -f infra/k8s -f infra/k8s-prod
+          args: apply -f infra/k8s/namespace \
+                -f infra/k8s/blockchain/secrets \
+                -f infra/k8s/blockchain/configmap \
+                -f infra/k8s/blockchain/services \
+                -f infra/k8s/blockchain/deployments \
+                -f infra/k8s/explorer/cakeshop \
+                -f infra/k8s/database/postgres \
+                -f infra/k8s/smart-contracts/permissioning-dapp \
+                -f infra/k8s/explorer/blockscout \
+                -f infra/k8s/monitoring \
+                -f infra/k8s-prod
