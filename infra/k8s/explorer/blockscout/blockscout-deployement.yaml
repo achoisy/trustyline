@@ -21,7 +21,7 @@ spec:
           command: ['sh', '-c', "until nslookup postgresql-db-0.postgresql-db-service.testnet.svc.cluster.local; do echo waiting for PostgreSQL to bootup; sleep 5; done"] 
       containers:
         - name: blockscout
-          image: rg.fr-par.scw.cloud/trustyline/blockscout:latest
+          image: achoisy/blockscout:latest
           imagePullPolicy: IfNotPresent
           env:
               - name: VALIDATOR1_PUBKEY
@@ -94,7 +94,7 @@ metadata:
   name: blockscout
   namespace: testnet
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
     - port: 4000
       targetPort: 4000

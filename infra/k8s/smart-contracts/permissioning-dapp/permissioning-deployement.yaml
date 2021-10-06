@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: permissioning-smart-contract
-          image: rg.fr-par.scw.cloud/trustyline/perm-smart-contracts
+          image: achoisy/perm-smart-contracts:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80

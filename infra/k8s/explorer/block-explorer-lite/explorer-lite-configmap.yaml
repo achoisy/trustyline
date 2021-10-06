@@ -22,7 +22,7 @@ data:
         }, {
             "uri": "plugin://aleth.io/eth-lite?v=4.2.0",
             "config": {
-                "nodeUrl": "http://localhost:8545"
+                "nodeUrl": "http://trustyline.com:8545"
             }
         }, {
             "uri": "plugin://aleth.io/eth-ibft2?v=2.0.1"
