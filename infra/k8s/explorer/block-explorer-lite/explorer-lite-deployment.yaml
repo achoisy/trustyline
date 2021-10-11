@@ -48,7 +48,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: lite-explorer
+  name: lite-explorer-svc
+  labels:
+    app: lite-explorer-svc
   namespace: testnet
 spec:
   type: ClusterIP

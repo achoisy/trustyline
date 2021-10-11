@@ -30,7 +30,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: permissioning-smart-contract
+  name: permissioning-smart-contract-svc
+  labels:
+    app: permissioning-smart-contract-svc
   namespace: testnet
 spec:
   type: ClusterIP

@@ -1,0 +1,48 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-trustyline
+  namespace: testnet
+  annotations:
+    # use the shared ingress-nginx
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - cakeshop.trustyline.com
+    - permissioning.trustyline.com
+    - lite-explorer.trustyline.com
+    secretName: www-trustyline-tls
+  rules:
+  - host: cakeshop.trustyline.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: cakeshop-svc
+            port:
+              number: 80
+  - host: permissioning.trustyline.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: permissioning-smart-contract-svc
+            port:
+              number: 80
+  - host: lite-explorer.trustyline.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: lite-explorer-svc
+            port:
+              number: 80
+---

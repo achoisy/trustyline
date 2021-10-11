@@ -38,12 +38,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: cakeshop
+  name: cakeshop-svc
   labels:
-    app: cakeshop
+    app: cakeshop-svc
   namespace: testnet
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: cakeshop
   ports:
