@@ -10,21 +10,11 @@ metadata:
 spec:
   tls:
   - hosts:
-    - cakeshop.trustyline.com
+    - jsonrpc.trustyline.com
     - permissioning.trustyline.com
     - lite-explorer.trustyline.com
     secretName: www-trustyline-tls
   rules:
-  - host: cakeshop.trustyline.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: cakeshop-svc
-            port:
-              number: 80
   - host: permissioning.trustyline.com
     http:
       paths:
@@ -45,4 +35,14 @@ spec:
             name: lite-explorer-svc
             port:
               number: 80
+  - host: jsonrpc.trustyline.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: testnet-rpcnode-svc
+            port:
+              number: 8545
 ---

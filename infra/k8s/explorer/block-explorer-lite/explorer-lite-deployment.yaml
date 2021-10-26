@@ -22,13 +22,7 @@ spec:
       initContainers:
         - name: init-validator
           image: busybox:1.28
-          command: ['sh', '-c', "until nslookup validator4-0.testnet-validator4.testnet.svc.cluster.local; do echo waiting for validator4 to bootup; sleep 5; done"]
-        - name: init-bootnode
-          image: pegasyseng/k8s-helper:v1.18.4
-          command:
-            - "sh"
-            - "-c"
-            - "curl -X GET --connect-timeout 60 --max-time 300 --retry 10 --retry-delay 30 --retry-max-time 300 ${TESTNET_VALIDATOR1_SERVICE_HOST}:8545/liveness"    
+          command: ['sh', '-c', "until nslookup validator4-0.testnet-validator4.testnet.svc.cluster.local; do echo waiting for validator4 to bootup; sleep 5; done"]  
       containers:
         - image: alethio/ethereum-lite-explorer
           imagePullPolicy: IfNotPresent

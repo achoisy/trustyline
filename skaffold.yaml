@@ -8,7 +8,7 @@ deploy:
       - ./infra/k8s/blockchain/configmap/*
       - ./infra/k8s/blockchain/services/*
       - ./infra/k8s/blockchain/deployments/*
-      - ./infra/k8s/explorer/cakeshop/*
+      # - ./infra/k8s/explorer/cakeshop/*
       # - ./infra/k8s/database/postgres/*
       - ./infra/k8s/smart-contracts/permissioning-dapp/*
       # - ./infra/k8s/explorer/blockscout/*
