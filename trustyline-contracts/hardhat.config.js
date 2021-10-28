@@ -1,6 +1,7 @@
 require('@nomiclabs/hardhat-waffle');
 require('hardhat-tracer');
 require('@atixlabs/hardhat-time-n-mine');
+require('hardhat-erc1820');
 
 /**
  * @type import('hardhat/config').HardhatUserConfig

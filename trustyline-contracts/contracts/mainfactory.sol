@@ -8,21 +8,18 @@ contract MainFactory is AccessControlEnumerable {
     bytes32 public constant FACTORY_ROLE = keccak256("FACTORY_ROLE");
 
     FactoryRecords public factoryRecords;
-    IERC1820Registry public _IERC1820Registry;
 
-    event NewFactoryRecordAddr(address indexed factoryRecordAddr);
+    event NewFactoryDeploy(address indexed factoryRecordAddr);
+    event NewTokenDeploy(address indexed tokenAddr, address indexed owner);
 
     constructor() {
         _setupRole(FACTORY_ROLE, msg.sender);
-        factoryRecords = new FactoryRecords(msg.sender);
+        deployFactoryRecords();
     }
 
-    function updateFactoryRecordAddr(address newFactoryRecordAddr)
-        public
-        onlyRole(FACTORY_ROLE)
-    {
-        factoryRecords = FactoryRecords(newFactoryRecordAddr);
-        emit NewFactoryRecordAddr(newFactoryRecordAddr);
+    function deployFactoryRecords() public onlyRole(FACTORY_ROLE) {
+        factoryRecords = new FactoryRecords(msg.sender);
+        emit NewFactoryDeploy(address(factoryRecords));
     }
 
     function deployToken(string memory name, string memory symbol) public {
@@ -42,6 +39,8 @@ contract MainFactory is AccessControlEnumerable {
             _factoryName,
             _version
         );
+
+        emit NewTokenDeploy(address(tokenFactory), msg.sender);
     }
 }
 
@@ -67,7 +66,8 @@ contract FactoryRecords is AccessControlEnumerable {
 
     constructor(address creator) {
         _setupRole(FACTORY_RECORD_ROLE, msg.sender);
-        _setupRole(DEFAULT_ADMIN_ROLE, creator);
+        _setupRole(FACTORY_RECORD_ROLE, creator);
+        // _setupRole(DEFAULT_ADMIN_ROLE, creator);
     }
 
     function newDepls(
