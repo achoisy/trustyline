@@ -15,7 +15,7 @@ contract Privacy {
         _;
     }
 
-    function setPrivacy(bool openToPublic) public onlyOwner {
+    function setPublic(bool openToPublic) public onlyOwner {
         isPublic = openToPublic;
     }
 
@@ -24,7 +24,12 @@ contract Privacy {
         userAllow[userAddr] = true;
     }
 
+    function getUserList() public view returns (address[] memory) {
+        return usersAllowList;
+    }
+
     function removeUserByIndex(uint256 index) public onlyOwner {
+        require(index > 0, "Sorry, action not allow");
         address removeUser = usersAllowList[index];
         userAllow[removeUser] = false;
         delete usersAllowList[index];

@@ -1,4 +1,5 @@
 require('@nomiclabs/hardhat-waffle');
+require('@nomiclabs/hardhat-ethers');
 require('hardhat-tracer');
 require('@atixlabs/hardhat-time-n-mine');
 require('hardhat-erc1820');

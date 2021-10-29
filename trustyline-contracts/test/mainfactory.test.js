@@ -1,8 +1,9 @@
 const { expect } = require('chai');
+const { ethers } = require('hardhat');
 const { utils } = ethers;
 
 let admin, user1, user2;
-let mainFactory, factoryRecords, tokenFactory, privacy;
+let mainFactory, factoryRecords, tokenFactory;
 const ZERO_ADDRESS = ethers.constants.AddressZero;
 const ZERO_BYTES32 = ethers.constants.HashZero;
 
