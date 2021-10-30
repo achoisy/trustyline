@@ -3,9 +3,11 @@ const { ethers } = require('hardhat');
 const { utils } = ethers;
 
 let admin, user1, user2;
-let mainFactory, factoryRecords, tokenFactory;
+let mainFactory, factoryRecords, tokenFactory, accountRules;
 const ZERO_ADDRESS = ethers.constants.AddressZero;
 const ZERO_BYTES32 = ethers.constants.HashZero;
+
+const accountRulesAddr = hre.accountRulesAddr;
 
 beforeEach(async () => {
   [admin, user1, user2] = await ethers.getSigners();
@@ -14,12 +16,18 @@ beforeEach(async () => {
   hre.tracer.nameTags[user1.address] = 'User1';
 
   const MainFactory = await ethers.getContractFactory('MainFactory');
-  mainFactory = await MainFactory.deploy();
+  mainFactory = await MainFactory.deploy(accountRulesAddr);
   await mainFactory.deployed();
+  await mainFactory.deployFactoryRecords();
   const factoryRecordsAddrs = await mainFactory.factoryRecords();
   factoryRecords = await ethers.getContractAt(
     'FactoryRecords',
     factoryRecordsAddrs
+  );
+
+  accountRules = await ethers.getContractAt(
+    'AccountRules',
+    hre.accountRulesAddr
   );
 });
 
@@ -95,5 +103,12 @@ describe('MainFactory Contract', () => {
     expect(contractDeplList).to.have.lengthOf(2);
     expect(contractDeplList[0][1]).is.equal(user1.address);
     expect(contractDeplList[1][1]).is.equal(user2.address);
+  });
+
+  it('Add deployed contract address in AccountRules permitted accounts', async () => {
+    await mainFactory.connect(user1).deployToken('TokenName', 'SYM');
+    const userDpls = await factoryRecords.getUserDeplList(user1.address);
+    const dplsAddr = userDpls[0][0];
+    expect(await accountRules.accountPermitted(dplsAddr)).ok;
   });
 });

@@ -6,12 +6,13 @@ pragma solidity >=0.8.4;
 
 contract Privacy {
     bool public isPublic;
-    mapping(address => bool) userAllow;
+
     address[] public usersAllowList;
+    mapping(address => uint256) internal indexOf; //1 based indexing. 0 means non-existent
     address public owner;
 
     modifier onlyOwner() {
-        require(msg.sender == owner, "Sorry, action not allow");
+        require(msg.sender == owner, "Sorry, action not allow by user");
         _;
     }
 
@@ -20,24 +21,40 @@ contract Privacy {
     }
 
     function addUser(address userAddr) public onlyOwner {
-        usersAllowList.push(userAddr);
-        userAllow[userAddr] = true;
+        if (indexOf[userAddr] == 0) {
+            usersAllowList.push(userAddr);
+            indexOf[userAddr] = usersAllowList.length;
+        }
     }
 
     function getUserList() public view returns (address[] memory) {
         return usersAllowList;
     }
 
-    function removeUserByIndex(uint256 index) public onlyOwner {
-        require(index > 0, "Sorry, action not allow");
-        address removeUser = usersAllowList[index];
-        userAllow[removeUser] = false;
-        delete usersAllowList[index];
+    function removeUser(address userAddr) public onlyOwner {
+        uint256 index = indexOf[userAddr];
+        if (userAddr != owner && index > 0 && index <= usersAllowList.length) {
+            // Can t remove account owner from userAllowList
+            if (index != usersAllowList.length) {
+                address lastUserAccount = usersAllowList[
+                    usersAllowList.length - 1
+                ];
+
+                // 1-based indexing
+                usersAllowList[index - 1] = lastUserAccount;
+            }
+
+            // Remove last empty element
+            usersAllowList.pop();
+
+            // remove index userAccount from mapping
+            indexOf[userAddr] = 0;
+        }
     }
 
     function isUserAllowed(address userAddr) public view returns (bool) {
         bool allow = false;
-        if (isPublic || userAllow[userAddr]) {
+        if (isPublic || indexOf[userAddr] != 0) {
             allow = true;
         }
         return allow;

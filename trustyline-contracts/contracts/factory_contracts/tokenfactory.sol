@@ -17,7 +17,8 @@ contract TokenFactory is ERC777, Privacy {
         address[] memory defaultOperators
     ) ERC777(name, symbol, defaultOperators) {
         owner = creator;
-        addUser(creator);
+        usersAllowList.push(owner);
+        indexOf[owner] = usersAllowList.length;
     }
 
     function mint(uint256 amount) public onlyOwner {

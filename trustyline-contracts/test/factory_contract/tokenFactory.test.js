@@ -69,7 +69,7 @@ describe('Token ERC777', () => {
       await tokenFactory.connect(user1).send(owner.address, 50, ZERO_BYTES32)
     ).ok;
 
-    await tokenFactory.removeUserByIndex(1);
+    await tokenFactory.removeUser(user1.address);
 
     await expect(
       tokenFactory.connect(user1).send(owner.address, 50, ZERO_BYTES32)
