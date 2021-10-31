@@ -20,8 +20,11 @@ contract SubscriptionHandler is AccessControlEnumerable {
         uint256 endDate
     );
 
-    constructor() {
+    constructor(address creator) {
         _setupRole(SUBS_ROLE, msg.sender);
+        if (msg.sender != creator) {
+            _setupRole(SUBS_ROLE, creator);
+        }
     }
 
     // userPeriod is in seconds

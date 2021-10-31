@@ -7,8 +7,8 @@ import "@openzeppelin/contracts/token/ERC777/ERC777.sol";
 import "./privacy.sol";
 
 contract TokenFactory is ERC777, Privacy {
-    bytes32 public constant TOKEN_FACTORY_NAME = keccak256("TOKEN_FACTORY");
-    uint256 public constant TOKEN_FACTORY_VERSION = 1000;
+    bytes32 public constant CONTRACT_NAME = keccak256("TOKEN_FACTORY");
+    uint256 public constant CONTRACT_VERSION = 1000;
 
     constructor(
         address creator,
@@ -35,11 +35,11 @@ contract TokenFactory is ERC777, Privacy {
         require(isUserAllowed(msg.sender), "Sorry, this contract is private");
     }
 
-    function getFactoryname() public pure returns (bytes32) {
-        return TOKEN_FACTORY_NAME;
+    function getContractName() public pure returns (bytes32) {
+        return CONTRACT_NAME;
     }
 
-    function getFactoryVersion() public pure returns (uint256) {
-        return TOKEN_FACTORY_VERSION;
+    function getContractVersion() public pure returns (uint256) {
+        return CONTRACT_VERSION;
     }
 }

@@ -10,7 +10,7 @@ let user1;
 beforeEach(async () => {
   [owner, user1] = await ethers.getSigners();
   const Subscribe = await ethers.getContractFactory('SubscriptionHandler');
-  subscribe = await Subscribe.deploy();
+  subscribe = await Subscribe.deploy(owner.address);
   await subscribe.deployed();
 });
 

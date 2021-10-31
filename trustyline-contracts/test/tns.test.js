@@ -11,7 +11,7 @@ const node = utils.keccak256(utils.toUtf8Bytes('0033612345678'));
 beforeEach(async () => {
   [owner, user1] = await ethers.getSigners();
   const TNS = await ethers.getContractFactory('TNS');
-  tns = await TNS.deploy();
+  tns = await TNS.deploy(owner.address);
   await tns.deployed();
 });
 

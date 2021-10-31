@@ -82,14 +82,14 @@ describe('MainFactory Contract', () => {
     expect(user1Dpls).to.have.lengthOf(1); // Only 1 contract should there !
     expect(await user1Token.name()).is.equal('TokenName1');
     expect(await user1Token.symbol()).is.equal('SYM1');
-    expect(await user1Token.TOKEN_FACTORY_NAME()).is.equal(user1Dpls[0][1]);
-    expect(await user1Token.TOKEN_FACTORY_VERSION()).is.equal(user1Dpls[0][2]);
+    expect(await user1Token.getContractName()).is.equal(user1Dpls[0][1]);
+    expect(await user1Token.getContractVersion()).is.equal(user1Dpls[0][2]);
 
     expect(user2Dpls).to.have.lengthOf(1); // Only 1 contract should there !
     expect(await user2Token.name()).is.equal('TokenName2');
     expect(await user2Token.symbol()).is.equal('SYM2');
-    expect(await user2Token.TOKEN_FACTORY_NAME()).is.equal(user2Dpls[0][1]);
-    expect(await user2Token.TOKEN_FACTORY_VERSION()).is.equal(user2Dpls[0][2]);
+    expect(await user2Token.getContractName()).is.equal(user2Dpls[0][1]);
+    expect(await user2Token.getContractVersion()).is.equal(user2Dpls[0][2]);
   });
 
   it('Can return a list of deployed contract by contract name (byte32)', async () => {
