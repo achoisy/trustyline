@@ -3,7 +3,11 @@ const { ethers } = require('hardhat');
 const { utils } = ethers;
 
 let admin, user1, user2;
-let mainFactory, factoryRecords, tokenFactory, accountRules;
+let mainFactory,
+  factoryRecords,
+  tokenFactory,
+  accountRules,
+  deploySubscriptionService;
 const ZERO_ADDRESS = ethers.constants.AddressZero;
 const ZERO_BYTES32 = ethers.constants.HashZero;
 
@@ -18,11 +22,20 @@ beforeEach(async () => {
   const MainFactory = await ethers.getContractFactory('MainFactory');
   mainFactory = await MainFactory.deploy(accountRulesAddr);
   await mainFactory.deployed();
+
   await mainFactory.deployFactoryRecords();
   const factoryRecordsAddrs = await mainFactory.factoryRecords();
   factoryRecords = await ethers.getContractAt(
     'FactoryRecords',
     factoryRecordsAddrs
+  );
+
+  await mainFactory.deploySubscriptionService();
+  const deploySubscriptionServiceAddrs =
+    await mainFactory.subscriptionService();
+  deploySubscriptionService = await ethers.getContractAt(
+    'SubscriptionHandler',
+    deploySubscriptionServiceAddrs
   );
 
   accountRules = await ethers.getContractAt(
@@ -45,6 +58,11 @@ describe('MainFactory Contract', () => {
   it('Should deploy a Factory Records contract', async () => {
     expect(factoryRecords.address).to.be.properAddress;
     expect(factoryRecords.address).is.not.equal(ZERO_ADDRESS);
+  });
+
+  it('Should deploy a Subscription service contract', async () => {
+    expect(deploySubscriptionService.address).to.be.properAddress;
+    expect(deploySubscriptionService.address).is.not.equal(ZERO_ADDRESS);
   });
 
   it('Can deploy token contract and add it to Factory records', async () => {

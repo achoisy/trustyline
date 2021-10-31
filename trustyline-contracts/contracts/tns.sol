@@ -35,11 +35,11 @@ contract TNS is AccessControlEnumerable {
 
     constructor(address creator) {
         _setupRole(TNS_ROLE, msg.sender);
-        records[0x0].addr = msg.sender;
-        records[0x0].isSet = true;
         if (msg.sender != creator) {
             _setupRole(TNS_ROLE, creator);
         }
+        records[0x0].addr = creator;
+        records[0x0].isSet = true;
     }
 
     function addRecord(bytes32 node, address newAdrr)
