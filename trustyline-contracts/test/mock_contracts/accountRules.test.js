@@ -1,8 +1,5 @@
 const { expect } = require('chai');
 const { ethers } = require('hardhat');
-const {
-  isCallTrace,
-} = require('hardhat/internal/hardhat-network/stack-traces/message-trace');
 
 let accountRules;
 let admin, user1;

@@ -29,6 +29,11 @@ subtask(TASK_TEST_SETUP_TEST_ENVIRONMENT).setAction(
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
+  networks: {
+    hardhat: {
+      allowUnlimitedContractSize: true,
+    },
+  },
   solidity: {
     version: '0.8.4',
     settings: {
