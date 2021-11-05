@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@atixlabs/hardhat-time-n-mine": "^0.0.5",
+    "@ensdomains/ens-contracts": "^0.0.7",
     "@nomiclabs/hardhat-ethers": "^2.0.2",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
     "@openzeppelin/contracts": "^4.3.2",

@@ -18,10 +18,30 @@ async function ensureAccountRules(hre) {
   console.log(`AccountRules deployed at ${accountRules.address}`);
 }
 
+async function deployENS(hre) {
+  const ENSFactory = await hre.ethers.getContractFactory('ENSCustomRegistry');
+  const ENSContract = await ENSFactory.deploy();
+  await ENSContract.deployed();
+
+  console.log(`ENS Registry deployed at ${ENSContract.address}`);
+
+  const _OwnedResolver = await hre.ethers.getContractFactory('OwnedResolver');
+  const OwnedResolver = await _OwnedResolver.deploy();
+  await OwnedResolver.deployed();
+
+  console.log(`ENS Resolver deployed at ${OwnedResolver.address}`);
+
+  hre.ENS = {
+    Registry: ENSContract.address,
+    Resolver: OwnedResolver.address,
+  };
+}
+
 subtask(TASK_TEST_SETUP_TEST_ENVIRONMENT).setAction(
   async (args, hre, runSuper) => {
     await runSuper(args);
     await ensureAccountRules(hre);
+    await deployENS(hre);
   }
 );
 
