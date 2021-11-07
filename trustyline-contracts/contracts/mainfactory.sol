@@ -10,8 +10,6 @@ import "./factoryrecords.sol";
 contract MainFactory is AccessControlEnumerable {
     event Log(string message);
     event LogBytes(bytes data);
-    event NewFactoryDeploy(address indexed dplAddr, string name);
-    event NewTokenDeploy(address indexed tokenAddr, address indexed owner);
 
     bytes32 public constant FACTORY_ROLE = keccak256("FACTORY_ROLE");
 
@@ -46,18 +44,11 @@ contract MainFactory is AccessControlEnumerable {
     function deployFactoryRecords() public onlyRole(FACTORY_ROLE) {
         factoryRecords = new FactoryRecords(msg.sender);
         AddContractPerm(address(factoryRecords));
-        emit NewFactoryDeploy(
-            address(factoryRecords),
-            "FactoryRecords deployement"
-        );
     }
 
     function deploySubscriptionService() public onlyRole(FACTORY_ROLE) {
         subscriptionService = new SubscriptionHandler(msg.sender);
-        emit NewFactoryDeploy(
-            address(subscriptionService),
-            "SubscriptionHandler deployement"
-        );
+        AddContractPerm(address(subscriptionService));
     }
 
     function deployToken(string memory name, string memory symbol)
@@ -83,7 +74,6 @@ contract MainFactory is AccessControlEnumerable {
         );
 
         AddContractPerm(address(tokenFactory));
-        emit NewTokenDeploy(address(tokenFactory), msg.sender);
     }
 
     function AddContractPerm(address deployContract) private {

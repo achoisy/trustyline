@@ -14,7 +14,7 @@ contract SubscriptionHandler is AccessControlEnumerable {
 
     mapping(address => Subscription) subscriptions;
 
-    event NewSubscription(
+    event SetSubscription(
         address indexed userAddr,
         uint8 userLevel,
         uint256 endDate
@@ -36,7 +36,7 @@ contract SubscriptionHandler is AccessControlEnumerable {
         uint256 endDate = block.timestamp + userPeriod;
         subscriptions[userAddr].level = userLevel;
         subscriptions[userAddr].endDate = endDate;
-        emit NewSubscription(userAddr, userLevel, endDate);
+        emit SetSubscription(userAddr, userLevel, endDate);
     }
 
     function getSubscription(address userAddr)

@@ -7,6 +7,14 @@ import "@openzeppelin/contracts/token/ERC777/ERC777.sol";
 import "./privacy.sol";
 
 contract TokenFactory is ERC777, Privacy {
+    event ERC777Deployed(
+        address indexed tokenAddr,
+        address indexed creatorAddr,
+        string name,
+        string symbol,
+        address[] defaultOperators
+    );
+
     bytes32 public constant CONTRACT_NAME = keccak256("TOKEN_FACTORY");
     uint256 public constant CONTRACT_VERSION = 1000;
 
@@ -19,6 +27,14 @@ contract TokenFactory is ERC777, Privacy {
         owner = creator;
         usersAllowList.push(owner);
         indexOf[owner] = usersAllowList.length;
+
+        emit ERC777Deployed(
+            address(this),
+            creator,
+            name,
+            symbol,
+            defaultOperators
+        );
     }
 
     function mint(uint256 amount) public onlyOwner {

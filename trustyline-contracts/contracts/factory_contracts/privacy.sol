@@ -5,8 +5,18 @@ pragma solidity >=0.8.4;
 // import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Privacy {
-    bool public isPublic;
+    event PrivacyAddUser(
+        address indexed tokenAddr,
+        address indexed userAddr,
+        uint256 index
+    );
+    event PrivacyRemoveUser(
+        address indexed tokenAddr,
+        address indexed userAddr
+    );
+    event PrivacySetPublic(address indexed tokenAddr, bool openToPublic);
 
+    bool public isPublic;
     address[] public usersAllowList;
     mapping(address => uint256) internal indexOf; //1 based indexing. 0 means non-existent
     address public owner;
@@ -18,12 +28,15 @@ contract Privacy {
 
     function setPublic(bool openToPublic) public onlyOwner {
         isPublic = openToPublic;
+        emit PrivacySetPublic(address(this), openToPublic);
     }
 
     function addUser(address userAddr) public onlyOwner {
         if (indexOf[userAddr] == 0) {
             usersAllowList.push(userAddr);
-            indexOf[userAddr] = usersAllowList.length;
+            uint256 index = usersAllowList.length;
+            indexOf[userAddr] = index;
+            emit PrivacyAddUser(address(this), userAddr, index);
         }
     }
 
@@ -49,6 +62,8 @@ contract Privacy {
 
             // remove index userAccount from mapping
             indexOf[userAddr] = 0;
+
+            emit PrivacyRemoveUser(address(this), userAddr);
         }
     }
 
