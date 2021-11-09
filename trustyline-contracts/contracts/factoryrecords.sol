@@ -48,7 +48,7 @@ contract FactoryRecords is AccessControlEnumerable {
         address _ownerAddr,
         bytes32 _deplName,
         uint256 _version
-    ) public onlyRole(FACTORY_RECORD_ROLE) {
+    ) public onlyRole(FACTORY_RECORD_ROLE) returns (bool) {
         if (indexOfContractDepl[_deplAddr] == 0) {
             contractDepls.push(
                 ContractDepl({
@@ -63,6 +63,7 @@ contract FactoryRecords is AccessControlEnumerable {
             userDplCounter[_ownerAddr].increment();
 
             emit DeplRecordAdded(_deplAddr, _ownerAddr, _deplName, _version);
+            return true;
         } else {
             revert("Contract already registered !");
         }
@@ -71,6 +72,7 @@ contract FactoryRecords is AccessControlEnumerable {
     function removeDepl(address _deplAddr)
         public
         onlyRole(FACTORY_RECORD_ROLE)
+        returns (bool)
     {
         uint256 index = indexOfContractDepl[_deplAddr];
         if (index > 0 && index <= contractDepls.length) {
@@ -90,6 +92,7 @@ contract FactoryRecords is AccessControlEnumerable {
                 removeDeplContract.deplName,
                 removeDeplContract.version
             );
+            return true;
         } else {
             revert("Contract don't exist in records");
         }

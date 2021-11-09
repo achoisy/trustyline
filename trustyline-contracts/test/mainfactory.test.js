@@ -19,29 +19,30 @@ beforeEach(async () => {
   hre.tracer.nameTags[admin.address] = 'Admin';
   hre.tracer.nameTags[user1.address] = 'User1';
 
-  const MainFactory = await ethers.getContractFactory('MainFactory');
-  mainFactory = await MainFactory.deploy(accountRulesAddr);
-  await mainFactory.deployed();
-
-  await mainFactory.deployFactoryRecords();
-  const factoryRecordsAddrs = await mainFactory.factoryRecords();
-  factoryRecords = await ethers.getContractAt(
-    'FactoryRecords',
-    factoryRecordsAddrs
-  );
-
-  await mainFactory.deploySubscriptionService();
-  const deploySubscriptionServiceAddrs =
-    await mainFactory.subscriptionService();
-  deploySubscriptionService = await ethers.getContractAt(
-    'SubscriptionHandler',
-    deploySubscriptionServiceAddrs
-  );
-
   accountRules = await ethers.getContractAt(
     'AccountRules',
     hre.accountRulesAddr
   );
+
+  const MainFactory = await ethers.getContractFactory('MainFactory');
+  mainFactory = await MainFactory.deploy();
+  await mainFactory.deployed();
+
+  await mainFactory.setAccountRules(accountRulesAddr);
+
+  const FactoryRecords = await ethers.getContractFactory('FactoryRecords');
+  factoryRecords = await FactoryRecords.deploy(mainFactory.address);
+  await factoryRecords.deployed();
+
+  await mainFactory.setFactoryRecords(factoryRecords.address);
+
+  const SubscriptionService = await ethers.getContractFactory(
+    'SubscriptionHandler'
+  );
+  deploySubscriptionService = await SubscriptionService.deploy(admin.address);
+  await deploySubscriptionService.deployed();
+
+  await mainFactory.setSubscriptionService(deploySubscriptionService.address);
 });
 
 describe('MainFactory Contract', () => {

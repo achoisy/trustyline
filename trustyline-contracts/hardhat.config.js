@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { subtask } = require('hardhat/config');
 const {
   TASK_TEST_SETUP_TEST_ENVIRONMENT,
@@ -7,6 +8,7 @@ require('@nomiclabs/hardhat-ethers');
 require('hardhat-tracer');
 require('@atixlabs/hardhat-time-n-mine');
 require('hardhat-erc1820');
+require('hardhat-deploy');
 
 async function ensureAccountRules(hre) {
   const AccountRules = await hre.ethers.getContractFactory('AccountRules');
@@ -51,7 +53,26 @@ subtask(TASK_TEST_SETUP_TEST_ENVIRONMENT).setAction(
 module.exports = {
   networks: {
     hardhat: {
-      allowUnlimitedContractSize: true,
+      allowUnlimitedContractSize: false,
+    },
+    trustyline: {
+      url: 'https://jsonrpc.trustyline.com',
+      chainId: 1337,
+      accounts: [`${process.env.TRUSTYLINE_DEPLOYER_PRIV_KEY}`],
+      live: true,
+      saveDeployments: true,
+      tags: ['live-testnet'],
+    },
+    ganache: {
+      url: 'HTTP://0.0.0.0:7545',
+      chainId: 1337,
+      live: true,
+      saveDeployments: true,
+      tags: ['ganache'],
+      accounts: {
+        mnemonic:
+          'stomach twice feature north ribbon normal easily extend lift wet truck school',
+      },
     },
   },
   solidity: {
@@ -61,6 +82,11 @@ module.exports = {
         enabled: true,
         runs: 200,
       },
+    },
+  },
+  namedAccounts: {
+    deployer: {
+      default: 0, // here this will by default take the first account as deployer
     },
   },
 };

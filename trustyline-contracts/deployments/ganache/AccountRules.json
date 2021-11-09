@@ -1,0 +1,216 @@
+{
+  "address": "0xd55e2783231777Ee1f601dd9c75E7D59bcc2f544",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "indexOf",
+          "type": "uint256"
+        }
+      ],
+      "name": "AddedAccount",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_account",
+          "type": "address"
+        }
+      ],
+      "name": "accountPermitted",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "addAccount",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "admin",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "allowlist",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "removeAccount",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0xd4379e67a20e98d69ce084a37dc8a3ef7c90312864175b1af03f3e080f878be1",
+  "receipt": {
+    "to": null,
+    "from": "0xBeee02B6884e92Ac9a4477b4A045E86B49A7EBd3",
+    "contractAddress": "0xd55e2783231777Ee1f601dd9c75E7D59bcc2f544",
+    "transactionIndex": 0,
+    "gasUsed": "359903",
+    "logsBloom": "0x00000000000000000000000000000000000001000000000000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000100000000040000000000000000000000000000000000000000000000000000000000000000000000000000040800000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xbb7c5a58d5a9c9fbf8dcb4b1cc203397dfd613e284e25f74d42150ade47bf1f7",
+    "transactionHash": "0xd4379e67a20e98d69ce084a37dc8a3ef7c90312864175b1af03f3e080f878be1",
+    "logs": [
+      {
+        "transactionIndex": 0,
+        "blockNumber": 1,
+        "transactionHash": "0xd4379e67a20e98d69ce084a37dc8a3ef7c90312864175b1af03f3e080f878be1",
+        "address": "0xd55e2783231777Ee1f601dd9c75E7D59bcc2f544",
+        "topics": [
+          "0x7ea36d91ba2f0ec8be46f6497901e8b727aea876fd973412e8bdf13235544950",
+          "0x000000000000000000000000beee02b6884e92ac9a4477b4a045e86b49a7ebd3"
+        ],
+        "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+        "logIndex": 0,
+        "blockHash": "0xbb7c5a58d5a9c9fbf8dcb4b1cc203397dfd613e284e25f74d42150ade47bf1f7"
+      }
+    ],
+    "blockNumber": 1,
+    "cumulativeGasUsed": "359903",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "solcInputHash": "e1af43b2c04c1effdf1f0485c7ba63ee",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.4+commit.c7e474f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"indexOf\",\"type\":\"uint256\"}],\"name\":\"AddedAccount\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_account\",\"type\":\"address\"}],\"name\":\"accountPermitted\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"addAccount\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"admin\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allowlist\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"removeAccount\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/mock_contracts/accountRules.sol\":\"AccountRules\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/mock_contracts/accountRules.sol\":{\"content\":\"//SPDX-License-Identifier: MIT\\npragma solidity >=0.8.4;\\n\\ncontract AccountRules {\\n    address public admin;\\n\\n    address[] public allowlist;\\n    mapping(address => uint256) private indexOf; //1 based indexing. 0 means non-existent\\n\\n    event AddedAccount(address indexed account, uint256 indexOf);\\n\\n    modifier onlyAdmin() {\\n        require(msg.sender == admin, \\\"Sender not authorized\\\");\\n        _;\\n    }\\n\\n    constructor() {\\n        admin = msg.sender;\\n        add(msg.sender);\\n    }\\n\\n    function addAccount(address account) external returns (bool) {\\n        bool added = add(account);\\n        return added;\\n    }\\n\\n    function removeAccount(address account) external returns (bool) {\\n        bool removed = remove(account);\\n        return removed;\\n    }\\n\\n    function add(address _account) private returns (bool) {\\n        if (indexOf[_account] == 0) {\\n            allowlist.push(_account);\\n            indexOf[_account] = allowlist.length;\\n            emit AddedAccount(_account, indexOf[_account]);\\n            return true;\\n        }\\n        return false;\\n    }\\n\\n    function remove(address _account) private returns (bool) {\\n        uint256 index = indexOf[_account];\\n        if (index > 0 && index <= allowlist.length) {\\n            //move last address into index being vacated (unless we are dealing with last index)\\n            if (index != allowlist.length) {\\n                address lastAccount = allowlist[allowlist.length - 1];\\n\\n                //1-based indexing\\n                allowlist[index - 1] = lastAccount;\\n                indexOf[lastAccount] = index;\\n            }\\n\\n            // Remove last empty element\\n            allowlist.pop();\\n\\n            // remove index from mapping\\n            indexOf[_account] = 0;\\n\\n            return true;\\n        }\\n        return false;\\n    }\\n\\n    function accountPermitted(address _account) public view returns (bool) {\\n        return exists(_account);\\n    }\\n\\n    function exists(address _account) internal view returns (bool) {\\n        return indexOf[_account] != 0;\\n    }\\n}\\n\",\"keccak256\":\"0x8a64a01cf1f5880367f01c6c318ddbc2b7e22a81fc8595785ce1e7f46c166358\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50600080546001600160a01b0319163390811790915561002f90610035565b506100f0565b6001600160a01b0381166000908152600260205260408120546100e8576001805480820182557fb10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf60180546001600160a01b0319166001600160a01b038516908117909155905460008281526002602090815260409182902083905590519182527f7ea36d91ba2f0ec8be46f6497901e8b727aea876fd973412e8bdf13235544950910160405180910390a2506001919050565b506000919050565b6103ef806100ff6000396000f3fe608060405234801561001057600080fd5b50600436106100575760003560e01c80630f68f0b31461005c57806369c458241461009c578063c4740a95146100c7578063e89b0e1e146100da578063f851a440146100ed575b600080fd5b61008761006a366004610357565b6001600160a01b0316600090815260026020526040902054151590565b60405190151581526020015b60405180910390f35b6100af6100aa36600461037e565b610100565b6040516001600160a01b039091168152602001610093565b6100876100d5366004610357565b61012a565b6100876100e8366004610357565b61013d565b6000546100af906001600160a01b031681565b6001818154811061011057600080fd5b6000918252602090912001546001600160a01b0316905081565b60008061013683610149565b9392505050565b6000806101368361029c565b6001600160a01b038116600090815260026020526040812054801580159061017357506001548111155b1561029357600154811461022f576001805460009190610194908290610396565b815481106101b257634e487b7160e01b600052603260045260246000fd5b6000918252602090912001546001600160a01b031690508060016101d68185610396565b815481106101f457634e487b7160e01b600052603260045260246000fd5b600091825260208083209190910180546001600160a01b0319166001600160a01b039485161790559290911681526002909152604090208190555b600180548061024e57634e487b7160e01b600052603160045260246000fd5b60008281526020808220830160001990810180546001600160a01b03191690559092019092556001600160a01b03949094168152600290935250506040812055600190565b50600092915050565b6001600160a01b03811660009081526002602052604081205461034f576001805480820182557fb10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf60180546001600160a01b0319166001600160a01b038516908117909155905460008281526002602090815260409182902083905590519182527f7ea36d91ba2f0ec8be46f6497901e8b727aea876fd973412e8bdf13235544950910160405180910390a2506001919050565b506000919050565b600060208284031215610368578081fd5b81356001600160a01b0381168114610136578182fd5b60006020828403121561038f578081fd5b5035919050565b6000828210156103b457634e487b7160e01b81526011600452602481fd5b50039056fea26469706673582212205c9e68a2eba20243562eb2475fc6fe112a6776a6dd81c9aec17e3f3e9e0f054364736f6c63430008040033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100575760003560e01c80630f68f0b31461005c57806369c458241461009c578063c4740a95146100c7578063e89b0e1e146100da578063f851a440146100ed575b600080fd5b61008761006a366004610357565b6001600160a01b0316600090815260026020526040902054151590565b60405190151581526020015b60405180910390f35b6100af6100aa36600461037e565b610100565b6040516001600160a01b039091168152602001610093565b6100876100d5366004610357565b61012a565b6100876100e8366004610357565b61013d565b6000546100af906001600160a01b031681565b6001818154811061011057600080fd5b6000918252602090912001546001600160a01b0316905081565b60008061013683610149565b9392505050565b6000806101368361029c565b6001600160a01b038116600090815260026020526040812054801580159061017357506001548111155b1561029357600154811461022f576001805460009190610194908290610396565b815481106101b257634e487b7160e01b600052603260045260246000fd5b6000918252602090912001546001600160a01b031690508060016101d68185610396565b815481106101f457634e487b7160e01b600052603260045260246000fd5b600091825260208083209190910180546001600160a01b0319166001600160a01b039485161790559290911681526002909152604090208190555b600180548061024e57634e487b7160e01b600052603160045260246000fd5b60008281526020808220830160001990810180546001600160a01b03191690559092019092556001600160a01b03949094168152600290935250506040812055600190565b50600092915050565b6001600160a01b03811660009081526002602052604081205461034f576001805480820182557fb10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf60180546001600160a01b0319166001600160a01b038516908117909155905460008281526002602090815260409182902083905590519182527f7ea36d91ba2f0ec8be46f6497901e8b727aea876fd973412e8bdf13235544950910160405180910390a2506001919050565b506000919050565b600060208284031215610368578081fd5b81356001600160a01b0381168114610136578182fd5b60006020828403121561038f578081fd5b5035919050565b6000828210156103b457634e487b7160e01b81526011600452602481fd5b50039056fea26469706673582212205c9e68a2eba20243562eb2475fc6fe112a6776a6dd81c9aec17e3f3e9e0f054364736f6c63430008040033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 8818,
+        "contract": "contracts/mock_contracts/accountRules.sol:AccountRules",
+        "label": "admin",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_address"
+      },
+      {
+        "astId": 8821,
+        "contract": "contracts/mock_contracts/accountRules.sol:AccountRules",
+        "label": "allowlist",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_array(t_address)dyn_storage"
+      },
+      {
+        "astId": 8825,
+        "contract": "contracts/mock_contracts/accountRules.sol:AccountRules",
+        "label": "indexOf",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_mapping(t_address,t_uint256)"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_array(t_address)dyn_storage": {
+        "base": "t_address",
+        "encoding": "dynamic_array",
+        "label": "address[]",
+        "numberOfBytes": "32"
+      },
+      "t_mapping(t_address,t_uint256)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => uint256)",
+        "numberOfBytes": "32",
+        "value": "t_uint256"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

@@ -3,9 +3,9 @@ pragma solidity >=0.8.4;
 
 import "@openzeppelin/contracts/access/AccessControlEnumerable.sol";
 import "./factory_contracts/tokenfactory.sol";
-import "./mock_contracts/accountRules.sol";
-import "./subscription.sol";
-import "./factoryrecords.sol";
+import "./mock_contracts/IAccountRules.sol";
+import "./ISubscription.sol";
+import "./IFactoryRecords.sol";
 
 contract MainFactory is AccessControlEnumerable {
     event Log(string message);
@@ -13,11 +13,16 @@ contract MainFactory is AccessControlEnumerable {
 
     bytes32 public constant FACTORY_ROLE = keccak256("FACTORY_ROLE");
 
-    AccountRules public accountRules;
-    FactoryRecords public factoryRecords;
-    SubscriptionHandler public subscriptionService;
+    IAccountRules public accountRules;
+    IFactoryRecords public factoryRecords;
+    ISubscriptionHandler public subscriptionService;
 
     uint8 public TokenFactoryLevel = 0;
+
+    modifier requireAccountRules() {
+        require(address(accountRules) != address(0), "AccountRules not set !");
+        _;
+    }
 
     modifier requireFatcoryRecords() {
         require(
@@ -36,26 +41,44 @@ contract MainFactory is AccessControlEnumerable {
         _;
     }
 
-    constructor(address _accountRules) {
+    constructor() {
         _setupRole(FACTORY_ROLE, msg.sender);
-        accountRules = AccountRules(_accountRules);
     }
 
-    function deployFactoryRecords() public onlyRole(FACTORY_ROLE) {
-        factoryRecords = new FactoryRecords(msg.sender);
-        AddContractPerm(address(factoryRecords));
-    }
-
-    function deploySubscriptionService() public onlyRole(FACTORY_ROLE) {
-        subscriptionService = new SubscriptionHandler(msg.sender);
-        AddContractPerm(address(subscriptionService));
-    }
-
-    function deployToken(string memory name, string memory symbol)
+    function setAccountRules(address _accountRules)
         public
-        requireFatcoryRecords
-        requireSubscription(TokenFactoryLevel)
+        onlyRole(FACTORY_ROLE)
     {
+        accountRules = IAccountRules(_accountRules);
+    }
+
+    function setFactoryRecords(address _factoryRecords)
+        public
+        onlyRole(FACTORY_ROLE)
+    {
+        factoryRecords = IFactoryRecords(_factoryRecords);
+    }
+
+    function setSubscriptionService(address _subscriptionService)
+        public
+        onlyRole(FACTORY_ROLE)
+    {
+        subscriptionService = ISubscriptionHandler(_subscriptionService);
+    }
+
+    function checkSubscription(uint8 level)
+        private
+        view
+        requireFatcoryRecords
+        returns (bool)
+    {
+        if (level > 0) {
+            return subscriptionService.checkSubscription(msg.sender, level);
+        }
+        return true;
+    }
+
+    function deployToken(string memory name, string memory symbol) public {
         TokenFactory tokenFactory = new TokenFactory(
             msg.sender,
             name,
@@ -66,7 +89,7 @@ contract MainFactory is AccessControlEnumerable {
         bytes32 _factoryName = tokenFactory.getContractName();
         uint256 _version = tokenFactory.getContractVersion();
 
-        factoryRecords.addDepl(
+        AddContractRecord(
             address(tokenFactory),
             msg.sender,
             _factoryName,
@@ -76,7 +99,10 @@ contract MainFactory is AccessControlEnumerable {
         AddContractPerm(address(tokenFactory));
     }
 
-    function AddContractPerm(address deployContract) private {
+    function AddContractPerm(address deployContract)
+        private
+        requireAccountRules
+    {
         try accountRules.addAccount(deployContract) returns (bool res) {
             if (res) {
                 emit Log("AccountRules Added successfully !");
@@ -88,10 +114,22 @@ contract MainFactory is AccessControlEnumerable {
         }
     }
 
-    function checkSubscription(uint8 level) private view returns (bool) {
-        if (level > 0) {
-            return subscriptionService.checkSubscription(msg.sender, level);
+    function AddContractRecord(
+        address deplContract,
+        address owner,
+        bytes32 _factoryName,
+        uint256 _version
+    ) private requireSubscription(TokenFactoryLevel) {
+        try
+            factoryRecords.addDepl(deplContract, owner, _factoryName, _version)
+        returns (bool res) {
+            if (res) {
+                emit Log("Contract Added successfully to factoryRecords !");
+            }
+        } catch Error(string memory reason) {
+            emit Log(reason);
+        } catch (bytes memory lowLevelData) {
+            emit LogBytes(lowLevelData);
         }
-        return true;
     }
 }
