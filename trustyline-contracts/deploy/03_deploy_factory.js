@@ -2,7 +2,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deploy, execute } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  const mainFactory = await deploy('MainFactory', {
+  await deploy('MainFactory', {
     from: deployer,
     // args: [deployer],
     log: true,
